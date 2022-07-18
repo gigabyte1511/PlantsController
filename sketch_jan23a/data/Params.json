@@ -1,0 +1,8 @@
+{
+"Ventilation" : 1,
+"Blowing" : 5,	
+"Light" : 5,
+"Hydration": 5,
+"TemperatureDHT11" : 10,
+"HumidityDHT11" : 20
+}

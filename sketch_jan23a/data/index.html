@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>ESP32 Web Server</title>
+  <meta name="viewport" content="width=device-width, initialscale=1">
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" type="text/css" href="style.css">
+  <meta charset="utf-8">
+</head>
+<body>
+	<div class="header">
+		<h1>SuperComputer</h1>			
+	</div>
+	<div class="body_status">
+		<p>Статус: <strong> %STATE1%</strong></p>
+	</div>
+	<div class="tabs">
+		<input type="radio" name="tab-btn" id="tab-btn-1" value="" checked>
+		<label for="tab-btn-1" id="tab-btn-10">Мгновенная установка</label>
+		<input type="radio" name="tab-btn" id="tab-btn-2" value="">
+		<label for="tab-btn-2">Распорядок дня</label>
+		<input type="radio" name="tab-btn" id="tab-btn-3" value="">
+		<label for="tab-btn-3">Статистика</label>
+		<input type="radio" name="tab-btn" id="tab-btn-4" value="">
+		<label for="tab-btn-4">Сервисная вкладка</label>
+		
+		<!--Первая вкладка------------------------------------------------------------------------------------------------------->
+		<div id="content-1">
+			<div class="body">	
+				<div class="body_leftSide">
+					<div class="task1">
+						<div class="nameOfObject">Вытяжка</div>
+						<button class="SendParamButton" id="sendDoitnowFanHood" onclick = 'sendDoitnow_fanHood()'>По распорядку</button>
+					</div>
+					<div class="task1">
+						<div class="nameOfObject">Обдув</div>
+						<button class="SendParamButton" id="sendDoitnowFanBlowing" onclick = 'sendDoitnow_fanBlowing()'>По распорядку</button>
+					</div>
+					<div class="task1">
+						<div class="nameOfObject">Освещение</div>
+						<button class="SendParamButton" id="sendDoitnowLight" onclick = 'sendDoitnow_light()'>По распорядку</button>
+					</div>
+				</div>
+		
+				<div class="body_rightSide">
+					<div class="task1">
+						<div class="nameOfSensor">Температура</div>
+						<input class="SensorInput" id="input_TemperatureDHT11" disabled></p>
+					</div>
+					<div class="task1">
+						<div class="nameOfSensor">Влажность воздуха</div>
+						<input class="SensorInput" id="input_HumidityDHT11" disabled></p>
+					</div>
+					<div class="task1">
+						<div class="nameOfSensor">Влажность почвы</div>
+						<input class="SensorInput" id="input_SoilHumidity" disabled></p>
+					</div>
+					<div class="task1">
+						<div class="nameOfSensor">Освещенность</div>
+						<input class="SensorInput" id="input_Light" disabled></p>
+					</div>
+					
+				</div>	
+			</div>
+		</div>
+		<!--Вторая вкладка------------------------------------------------------------------------------------------------------------>
+		<div id="content-2">
+			<button class="SendParamButton" onclick = "newTask()">Добавить задание</button>
+			<button class="SendParamButton" onclick = "readTask()">Прочитать задание</button>
+			<div id="tasksBlock" ></div>
+			<button class="SendParamButton" onclick = "sendTask()">Отправить задание</button>
+		</div>
+		&#37
+		<!--Третяя вкладка----------------------------------------------------------------------------------------------------------->
+		<div id="content-3">
+			<iframe width="450" height="260" style="border: 1px solid #cccccc;" src="https://thingspeak.com/channels/1789756/charts/1?bgcolor=&#37;23ffffff&color=&#37;23d62020&dynamic=true&results=60&title=&#37;D0&#37;AF&#37;D1&#37;80&#37;D0&#37;BA&#37;D0&#37;BE&#37;D1&#37;81&#37;D1&#37;82&#37;D1&#37;8C&type=line&xaxis=&#37;D0&#37;92&#37;D1&#37;80&#37;D0&#37;B5&#37;D0&#37;BC&#37;D1&#37;8F&yaxis=&#37;D0&#37;AF&#37;D1&#37;80&#37;D0&#37;BA&#37;D0&#37;BE&#37;D1&#37;81&#37;D1&#37;82&#37;D1&#37;8C+&#37;D1&#37;81&#37;D0&#37;B2&#37;D0&#37;B5&#37;D1&#37;82&#37;D0&#37;B0&#37;2C+LUX"></iframe>
+			<iframe width="450" height="260" style="border: 1px solid #cccccc;" src="https://thingspeak.com/channels/1789756/charts/2?bgcolor=&#37;23ffffff&color=&#37;23d62020&dynamic=true&results=60&title=&#37;D0&#37;92&#37;D0&#37;BB&#37;D0&#37;B0&#37;D0&#37;B6&#37;D0&#37;BD&#37;D0&#37;BE&#37;D1&#37;81&#37;D1&#37;82&#37;D1&#37;8C+&#37;D0&#37;BF&#37;D0&#37;BE&#37;D1&#37;87&#37;D0&#37;B2&#37;D1&#37;8B&type=line&xaxis=&#37;D0&#37;92&#37;D1&#37;80&#37;D0&#37;B5&#37;D0&#37;BC&#37;D1&#37;8F&yaxis=&#37;D0&#37;92&#37;D0&#37;BB&#37;D0&#37;B0&#37;D0&#37;B6&#37;D0&#37;BD&#37;D0&#37;BE&#37;D1&#37;81&#37;D1&#37;82&#37;D1&#37;8C&#37;2C+&#37;25"></iframe>
+			<iframe width="450" height="260" style="border: 1px solid #cccccc;" src="https://thingspeak.com/channels/1789756/charts/3?bgcolor=&#37;23ffffff&color=&#37;23d62020&dynamic=true&results=60&title=&#37;D0&#37;A2&#37;D0&#37;B5&#37;D0&#37;BC&#37;D0&#37;BF&#37;D0&#37;B5&#37;D1&#37;80&#37;D0&#37;B0&#37;D1&#37;82&#37;D1&#37;83&#37;D1&#37;80&#37;D0&#37;B0&type=line&xaxis=&#37;D0&#37;92&#37;D1&#37;80&#37;D0&#37;B5&#37;D0&#37;BC&#37;D1&#37;8F&yaxis=&#37;D0&#37;A2&#37;D0&#37;B5&#37;D0&#37;BC&#37;D0&#37;BF&#37;D0&#37;B5&#37;D1&#37;80&#37;D0&#37;B0&#37;D1&#37;82&#37;D1&#37;83&#37;D1&#37;80&#37;D0&#37;B0&#37;2C+&#37;D0&#37;A1&#37;C2&#37;B0"></iframe>
+			<iframe width="450" height="260" style="border: 1px solid #cccccc;" src="https://thingspeak.com/channels/1789756/charts/4?bgcolor=&#37;23ffffff&color=&#37;23d62020&dynamic=true&results=60&title=&#37;D0&#37;92&#37;D0&#37;BB&#37;D0&#37;B0&#37;D0&#37;B6&#37;D0&#37;BD&#37;D0&#37;BE&#37;D1&#37;81&#37;D1&#37;82&#37;D1&#37;8C+&#37;D0&#37;B2&#37;D0&#37;BE&#37;D0&#37;B7&#37;D0&#37;B4&#37;D1&#37;83&#37;D1&#37;85&#37;D0&#37;B0&type=line&xaxis=&#37;D0&#37;92&#37;D1&#37;80&#37;D0&#37;B5&#37;D0&#37;BC&#37;D1&#37;8F&yaxis=&#37;D0&#37;92&#37;D0&#37;BB&#37;D0&#37;B0&#37;D0&#37;B6&#37;D0&#37;BD&#37;D0&#37;BE&#37;D1&#37;81&#37;D1&#37;82&#37;D1&#37;8C+&#37;D0&#37;B2&#37;D0&#37;BE&#37;D0&#37;B7&#37;D0&#37;B4&#37;D1&#37;83&#37;D1&#37;85&#37;D0&#37;B0&#37;2C+&#37;25"></iframe>
+		</div>
+		<!--Четвертая вкладка----------------------------------------------------------------------------------------------------------->
+		<div id="content-4">
+			<button class="SendParamButton" onclick = "return location.href = '/update'">ElegantOTA</button>
+			<button class="SendParamButton" onclick = "SerialTasks()">Вывести Tasks в Serial </button>
+			<input type="radio" id="tab-btn-4" value="">
+			<label for="tab-btn-4">Включить оторбражение показателей датчиков в режиме реального времени</label>
+			<input type="radio" id="tab-btn-5" value="">
+			<label for="tab-btn-5">Включить самоуничтожение</label>
+			<input type="radio" id="tab-btn-6" value="">
+			<label for="tab-btn-6">Устроить потоп</label>
+			<input type="radio" id="tab-btn-7" value="">
+			<label for="tab-btn-7">Вызвать ментов</label>
+			<input type="radio" id="tab-btn-7" value="">
+			<label for="tab-btn-7">Автоматический режим</label>
+			
+		</div>
+		
+	</div>
+	<!--	
+	<div id="content-1">
+			<div class="bodySide">	
+				<div class="body_leftSide">
+					<p></p>
+					<p>Вытяжка: <input id="input_VentilationSlider" disabled></p>
+					<p><input type="range" min="0" max="10" id="VentilationSlider" oninput='changeSlider("VentilationSlider", "input_VentilationSlider")' value="0"></p>
+			
+					<p>Обдув: <input id="input_BlowingSlider" disabled></p> 
+					<p><input type="range" min="0" max="10" id="BlowingSlider" oninput='changeSlider("BlowingSlider", "input_BlowingSlider")' value="0"></p>
+			
+					<p>Увлажнение: <input id="input_HydrationSlider" disabled></p> 
+					<p><input type="range" min="0" max="10" id="HydrationSlider" oninput='changeSlider("HydrationSlider", "input_HydrationSlider")' value="0"></p>
+			
+					<p>Освещение: <input id="input_LightSlider" disabled></p> 
+					<p><input type="range" min="0" max="10" id="LightSlider" oninput='changeSlider("LightSlider", "input_LightSlider")' value="0"></p>
+			
+					<button class="SendParamButton" onclick = "sendParam()">Send</button>
+					<button class="SendParamButton" onclick = "sendPost()">Отправить установку</button>
+					<button class="SendParamButton" onclick = "readPost()">Считать установку</button>
+					
+					<!--<div id="input_VentilationSlider1" ></div>
+					<!-- <p><a href="/on"><button class="button">ON</button></a></p>
+					<p><a href="/off"><button class="button button2">OFF</button></a></p>
+					<p>G23<button class="button" onclick = "sendParam()">ON</button></p>
+					
+					
+				</div>
+		
+				<div class="body_rightSide">
+					
+				</div>	
+			</div>
+		</div>
+	-->
+	<div class="footer"> 
+		SuperComputer V1.0 (powered by ESP32)
+	</div>
+	
+</body>
+<script>
+	window.onload = readPost();
+	
+	function sendParam() {
+		var xhr = new XMLHttpRequest(); // инициализируем переменную новым объектом XMLHttpRequest
+		xhr.open("GET","index.html" + param0 + "&Light=" + param1); // определяем параметры для запроса 
+		xhr.send(); // отправляем запрос на сервер
+	}
+	function sendPost(){
+		var xhr = new XMLHttpRequest(); // инициализируем переменную новым объектом XMLHttpRequest
+		var json = JSON.stringify({
+			Ventilation: 	document.getElementById("VentilationSlider").value,
+			Blowing: 		document.getElementById("BlowingSlider").value,
+			Light: 			document.getElementById("HydrationSlider").value,
+			Hydration: 		document.getElementById("LightSlider").value
+		});
+		xhr.open("POST", "/api/write"); // определяем параметры для запроса 
+		xhr.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
+		xhr.send(json); // отправляем запрос на сервер
+	}
+	function readPost(){
+		var xhr = new XMLHttpRequest(); // инициализируем переменную новым объектом XMLHttpRequest
+		xhr.open("POST", "/api/read"); // определяем параметры для запроса 
+		xhr.send(); // отправляем запрос на сервер
+		//alert(xhr.responseText);
+		xhr.onload = function() {
+			if (xhr.status != 200) { // анализируем HTTP-статус ответа, если статус не 200, то произошла ошибка
+				alert(`Ошибка ${xhr.status}: ${xhr.statusText}`); // Например, 404: Not Found
+			} 
+			else { 
+				var getParam = JSON.parse(xhr.responseText);
+				//document.getElementById('VentilationSlider').value = getParam.Ventilation;
+				//document.getElementById('input_VentilationSlider').value = getParam.Ventilation + "0";
+				
+				//document.getElementById('BlowingSlider').value = getParam.Blowing;
+				//document.getElementById('input_BlowingSlider').value = getParam.Blowing + "0";
+				
+				//document.getElementById('LightSlider').value = getParam.Light;
+				//document.getElementById('input_LightSlider').value = getParam.Light + "0";
+				
+				//document.getElementById('HydrationSlider').value = getParam.Hydration;
+				//document.getElementById('input_HydrationSlider').value = getParam.Hydration + "0";
+				
+				document.getElementById('input_TemperatureDHT11').value = getParam.TemperatureDHT11;
+				document.getElementById('input_HumidityDHT11').value = getParam.HumidityDHT11;
+				document.getElementById('input_SoilHumidity').value = getParam.SoilHumidity;
+				document.getElementById('input_Light').value = getParam.Light;
+				
+				
+				
+			}
+		};
+	}
+	
+	function changeSlider(nameSlider, input_name ){
+		var x = document.getElementById(nameSlider).value;
+		document.getElementById(input_name).value = x + "0";
+		//document.querySelector('#input_VentilationSlider1').textContent = x;
+	}
+	
+	var taskCouter = 0;
+	var timeIntervalCouter = 1;
+	
+	function newTask(){
+	
+		taskCouter++;
+		var task = document.createElement('div');
+		task.className = "task";
+		task.id = taskCouter;
+		document.getElementById("tasksBlock").append(task);
+		
+		var buttonDel = document.createElement('div');
+		buttonDel.innerHTML = '<button class="delTaskButton" onclick = "deleteParam(' + taskCouter + ')">Удалить это задание</button>';
+		task.append(buttonDel);
+		
+		var select = document.createElement('div');
+		select.className = "select";
+		select.innerHTML = '<select name="user_profile_color_1"><option value="1">Вытяжка</option><option value="2">Обдув</option><option value="3">Освещение</option><option value="4">Увлажнение</option><option value="5">Полив</option></select>';
+		task.append(select);
+		
+		var buttonArea = document.createElement('div');
+		task.append(buttonArea);
+		
+		
+			var addTimeIntervalButton = document.createElement('div');
+			addTimeIntervalButton.innerHTML = '<button class="addTimeIntervalButton" onclick = "addTime(' + taskCouter +')">Добавить промежуток</button>'
+			buttonArea.append(addTimeIntervalButton);
+		
+		
+		var time = document.createElement('div');
+		time.className = "timeBlock";
+		time.id = "timeBlock" + taskCouter;
+		task.append(time);
+		
+			
+}
+	function deleteParam(div){
+		document.getElementById(div).remove();
+	}
+	
+	function addTime(timeBlock){
+		var time = document.createElement('div');
+		time.className = "timeInterval";
+		time.id = "timeInterval" + timeIntervalCouter;
+		time.innerHTML = 'с <input type="time" class="from" step="1"> до <input type="time" class="to" step="1">';
+		time.insertAdjacentHTML('beforeend', '<button class="delTimeButton" onclick = "delTime('+ timeIntervalCouter +')">Удалить</button>')
+		document.getElementById('timeBlock'+ timeBlock).append(time);
+		timeIntervalCouter++;
+	}
+	
+	function delTime(timeIntervalId){
+		document.getElementById('timeInterval' + timeIntervalId).remove();
+	}
+	
+	function sendTask(){
+		var a = getSelectValue();
+		var b = getSelectTimeFrom();
+		console.log("test");
+		console.log(b);
+		var c = getSelectTimeTo();
+		var tasks = [];
+		var j = 0;	
+		if (b.length > 12){alert("Превышенно максимально доступное колличество заданий!")}
+		else{
+		if( b.length > 0){
+	outer: for ( var i = 0; i <= b.length; i++){
+			
+				while (b[j].number <= i){
+					
+					tasks[j] = 	{ 	
+									numberOfTasks: b.length,
+									number: j,
+									object : a[i],
+									from: b[j].from,
+									to:c[j].to 
+									}
+					j++;
+					if (j >= b.length) break outer;
+					
+				}
+		
+			}
+		}
+		
+		//console.log(tasks);
+		var json = JSON.stringify(tasks);
+		//console.log(json);
+		
+		var xhr = new XMLHttpRequest();
+		xhr.open("POST", "/api/tasks/write"); // определяем параметры для запроса 
+		xhr.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
+		xhr.send(json); // отправляем запрос на сервер
+		console.log(json);
+		console.log(xhr.responseText);
+		}
+	}
+	
+	
+	function getSelectValue(){
+		//let elements = document.getElementById("tasksBlock").querySelectorAll('.select');
+		let elements = document.querySelectorAll('#tasksBlock > .task > .select > select ');
+		let elementsArray = [];
+		var i = 0;
+		for (let elem of elements) {
+			elementsArray[i]=elem.options[elem.selectedIndex].text;
+				//elementsArray[i] = elem;
+			//alert(elem.options.lenght);
+			//alert(elementsArray[i]); // "тест", "пройден"
+			i++;
+		}
+		return elementsArray;
+	}
+	function getSelectTimeFrom(){
+		//let elements = document.getElementById("tasksBlock").querySelectorAll('timeBlock');
+		let elements = document.querySelectorAll('#tasksBlock > .task > .timeBlock');
+		var tasks = [];		
+		var i = 0;
+		var j = 0;
+		
+		for (let elem of elements) {
+		
+			let times = elem.querySelectorAll('.timeInterval > .from');
+			for (let time of times) {
+				//alert(time.value);
+				tasks[j]=	{
+							number : i,
+							from: time.value
+							}
+				j++;
+			}	
+			i++;
+			
+		}
+		
+		return tasks;
+	}
+	function getSelectTimeTo(){
+		//let elements = document.getElementById("tasksBlock").querySelectorAll('timeBlock');
+		let elements = document.querySelectorAll('#tasksBlock > .task > .timeBlock');
+		var tasks = [];		
+		var i = 0;
+		var j = 0;
+		for (let elem of elements) {
+		
+			let times = elem.querySelectorAll('.timeInterval > .to');
+			for (let time of times) {
+				//alert(time.value);
+				tasks[j]=	{
+							number : i,
+							to: time.value
+							}
+				j++;
+			}	
+			i++;
+		}
+		
+		return tasks;
+	}
+	
+	function readTask(){
+		var xhr = new XMLHttpRequest(); // инициализируем переменную новым объектом XMLHttpRequest
+		xhr.open("POST", "/api/tasks/read"); // определяем параметры для запроса 
+		xhr.send(); // отправляем запрос на сервер
+		//alert(xhr.responseText);
+		xhr.onload = function() {
+			if (xhr.status != 200) { // анализируем HTTP-статус ответа, если статус не 200, то произошла ошибка
+				alert(`Ошибка ${xhr.status}: ${xhr.statusText}`); // Например, 404: Not Found
+			} 
+			else { 
+				//var getParam = JSON.parse(xhr.responseText);
+				console.log(xhr.responseText);
+				document.getElementById('tasksBlock').innerHTML = "";
+				var getTasks = JSON.parse(xhr.responseText);
+				console.log(getTasks[0]);
+				console.log(getTasks[1]);
+				console.log(getTasks[0].number);
+				console.log(getTasks.length);
+				for (var i = 1; i <=getTasks.length; i++ ){
+					taskCouter++;
+					var task = document.createElement('div');
+					task.className = "task";
+					task.id = (i);
+					document.getElementById("tasksBlock").append(task);
+					
+					var buttonDel = document.createElement('div');
+					buttonDel.innerHTML = '<button class="delTaskButton" onclick = "deleteParam(' + i + ')">Удалить это задание</button>';
+					task.append(buttonDel);
+					
+					var select = document.createElement('div');
+					select.className = "select";
+					select.innerHTML = '<select name="user_profile_color_1" id = "select'+ i + '"><option value="Вытяжка">Вытяжка</option><option value="Обдув">Обдув</option><option value="Освещение">Освещение</option><option value="влажнение">Увлажнение</option><option value="Полив">Полив</option></select>';
+					task.append(select);
+					document.getElementById('select'+i).value = getTasks[(i-1)].object;
+
+					var buttonArea = document.createElement('div');
+					task.append(buttonArea);
+					
+						var addTimeIntervalButton = document.createElement('div');
+						addTimeIntervalButton.innerHTML = '<button class="addTimeIntervalButton" onclick = "addTime(' + i +')">Добавить промежуток</button>'
+						buttonArea.append(addTimeIntervalButton);
+					
+					var time = document.createElement('div');
+					time.className = "timeBlock";
+					time.id = "timeBlock" + taskCouter;
+					task.append(time);
+					
+					var time = document.createElement('div');
+					time.className = "timeInterval";
+					time.id = "timeInterval" + timeIntervalCouter;
+					time.innerHTML = 'с <input type="time" class="from" step="1" value ='+ getTasks[(i-1)].from +'> до <input type="time" class="to" step="1" value ='+ getTasks[(i-1)].to +'>';
+					time.insertAdjacentHTML('beforeend', '<button class="delTimeButton" onclick = "delTime('+ timeIntervalCouter +')">Удалить</button>')
+					document.getElementById('timeBlock'+ taskCouter).append(time);
+					timeIntervalCouter++;
+					
+					/*
+					for (var j = 1; i<= (getTasks.length ); j++){
+						if (getTasks[(i-1)].object == getTasks[(j-1)].object ){
+							if (getTasks[(i-1)].from == getTasks[(j-1)].from){
+								var time = document.createElement('div');
+								time.className = "timeInterval";
+								time.id = "timeInterval" + timeIntervalCouter;
+								time.innerHTML = 'с <input type="time" class="from" step="1" value ='+ getTasks[(i-1)].from +'> до <input type="time" class="to" step="1" value ='+ getTasks[(i-1)].to +'>';
+								time.insertAdjacentHTML('beforeend', '<button class="delTimeButton" onclick = "delTime('+ timeIntervalCouter +')">Удалить</button>')
+								document.getElementById('timeBlock'+ timeBlock).append(time);
+								timeIntervalCouter++;
+							}
+							if (getTasks[i].from != getTasks[j].from){
+								var time = document.createElement('div');
+								time.className = "timeInterval";
+								time.id = "timeInterval" + timeIntervalCouter;
+								time.innerHTML = 'с <input type="time" class="from" step="1" value ='+ getTasks[(i-1)].from +'> до <input type="time" class="to" step="1" value ='+ getTasks[(i-1)].to +'>';
+								time.insertAdjacentHTML('beforeend', 'с <input type="time" class="from" step="1" value ='+ getTasks[(j-1)].from +'> до <input type="time" class="to" step="1" value ='+ getTasks[(j-1)].to +'>')
+								time.insertAdjacentHTML('beforeend', '<button class="delTimeButton" onclick = "delTime('+ timeIntervalCouter +')">Удалить</button>')
+								document.getElementById('timeBlock'+ timeBlock).append(time);
+								timeIntervalCouter++;
+							}
+						}
+						if (getTasks[i].object != getTasks[j].object ){
+							var time = document.createElement('div');
+							time.className = "timeInterval";
+							time.id = "timeInterval" + timeIntervalCouter;
+							time.innerHTML = 'с <input type="time" class="from" step="1" value ='+ getTasks[i].from +'> до <input type="time" class="to" step="1" value ='+ getTasks[i].to +'>';
+							time.insertAdjacentHTML('beforeend', '<button class="delTimeButton" onclick = "delTime('+ timeIntervalCouter +')">Удалить</button>')
+							document.getElementById('timeBlock'+ timeBlock).append(time);
+							timeIntervalCouter++;
+						}
+					}
+					var time = document.createElement('div');
+					time.className = "timeInterval";
+					time.id = "timeInterval" + timeIntervalCouter;
+					time.innerHTML = 'с <input type="time" class="from" step="1"> до <input type="time" class="to" step="1">';
+					time.insertAdjacentHTML('beforeend', '<button class="delTimeButton" onclick = "delTime('+ timeIntervalCouter +')">Удалить</button>')
+					document.getElementById('timeBlock'+ timeBlock).append(time);
+					timeIntervalCouter++;
+					
+					*/
+				}		
+			}
+		};
+	}
+	function SerialTasks(){
+		var xhr = new XMLHttpRequest();
+		xhr.open("GET", "/api/debugging"); // определяем параметры для запроса 
+		xhr.send(); // отправляем запрос на сервер
+	}
+	
+	var doitnowButtonTrigger_FanHood = 1;
+	function sendDoitnow_fanHood(){
+		var xhr = new XMLHttpRequest(); // инициализируем переменную новым объектом XMLHttpRequest
+		if (doitnowButtonTrigger_FanHood == 0){
+			var json = JSON.stringify({
+				Object: "Вытяжка",
+				Status: 0
+			});
+			xhr.open("POST", "/api/doitnow/write"); // определяем параметры для запроса 
+			xhr.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
+			xhr.send(json); // отправляем запрос на сервер
+			console.log("0");
+			document.getElementById("sendDoitnowFanHood").innerText = "По распорядку";
+			doitnowButtonTrigger_FanHood++;
+			return;
+		}
+		if (doitnowButtonTrigger_FanHood == 1){
+			var json = JSON.stringify({
+				Object: "Вытяжка",
+				Status: 1
+			});
+			xhr.open("POST", "/api/doitnow/write"); // определяем параметры для запроса 
+			xhr.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
+			xhr.send(json); // отправляем запрос на сервер
+			console.log("1");
+			document.getElementById("sendDoitnowFanHood").innerText = "Отключено";
+			doitnowButtonTrigger_FanHood++;
+			return;
+		}
+		if (doitnowButtonTrigger_FanHood == 2){
+			var json = JSON.stringify({
+				Object: "Вытяжка",
+				Status: 2
+			});
+			xhr.open("POST", "/api/doitnow/write"); // определяем параметры для запроса 
+			xhr.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
+			xhr.send(json); // отправляем запрос на сервер
+			console.log("2");
+			document.getElementById("sendDoitnowFanHood").innerText = "Включено";
+			doitnowButtonTrigger_FanHood=0;
+			return;
+		}
+	}
+	var doitnowButtonTrigger_fanBlowing = 1;
+	function sendDoitnow_fanBlowing(){
+		var xhr = new XMLHttpRequest(); // инициализируем переменную новым объектом XMLHttpRequest
+		if (doitnowButtonTrigger_fanBlowing == 0){
+			var json = JSON.stringify({
+				Object: "Обдув",
+				Status: 0
+			});
+			xhr.open("POST", "/api/doitnow/write"); // определяем параметры для запроса 
+			xhr.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
+			xhr.send(json); // отправляем запрос на сервер
+			console.log("0");
+			document.getElementById("sendDoitnowFanBlowing").innerText = "По распорядку";
+			doitnowButtonTrigger_fanBlowing++;
+			return;
+		}
+		if (doitnowButtonTrigger_fanBlowing == 1){
+			var json = JSON.stringify({
+				Object: "Обдув",
+				Status: 1
+			});
+			xhr.open("POST", "/api/doitnow/write"); // определяем параметры для запроса 
+			xhr.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
+			xhr.send(json); // отправляем запрос на сервер
+			console.log("1");
+			document.getElementById("sendDoitnowFanBlowing").innerText = "Отключено";
+			doitnowButtonTrigger_fanBlowing++;
+			return;
+		}
+		if (doitnowButtonTrigger_fanBlowing == 2){
+			var json = JSON.stringify({
+				Object: "Обдув",
+				Status: 2
+			});
+			xhr.open("POST", "/api/doitnow/write"); // определяем параметры для запроса 
+			xhr.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
+			xhr.send(json); // отправляем запрос на сервер
+			console.log("2");
+			document.getElementById("sendDoitnowFanBlowing").innerText = "Включено";
+			doitnowButtonTrigger_fanBlowing=0;
+			return;
+		}
+	}
+	var doitnowButtonTrigger_light = 1;
+	function sendDoitnow_light(){
+		var xhr = new XMLHttpRequest(); // инициализируем переменную новым объектом XMLHttpRequest
+		if (doitnowButtonTrigger_light == 0){
+			var json = JSON.stringify({
+				Object: "Освещение",
+				Status: 0
+			});
+			xhr.open("POST", "/api/doitnow/write"); // определяем параметры для запроса 
+			xhr.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
+			xhr.send(json); // отправляем запрос на сервер
+			console.log("0");
+			document.getElementById("sendDoitnowLight").innerText = "По распорядку";
+			doitnowButtonTrigger_light++;
+			return;
+		}
+		if (doitnowButtonTrigger_light == 1){
+			var json = JSON.stringify({
+				Object: "Освещение",
+				Status: 1
+			});
+			xhr.open("POST", "/api/doitnow/write"); // определяем параметры для запроса 
+			xhr.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
+			xhr.send(json); // отправляем запрос на сервер
+			console.log("1");
+			document.getElementById("sendDoitnowLight").innerText = "Отключено";
+			doitnowButtonTrigger_light++;
+			return;
+		}
+		if (doitnowButtonTrigger_light == 2){
+			var json = JSON.stringify({
+				Object: "Освещение",
+				Status: 2
+			});
+			xhr.open("POST", "/api/doitnow/write"); // определяем параметры для запроса 
+			xhr.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
+			xhr.send(json); // отправляем запрос на сервер
+			console.log("2");
+			document.getElementById("sendDoitnowLight").innerText = "Включено";
+			doitnowButtonTrigger_light=0;
+			return;
+		}
+	}
+	/*
+	function readTask1(){
+		var xhr = new XMLHttpRequest(); // инициализируем переменную новым объектом XMLHttpRequest
+		xhr.open("POST", "/api/tasks/read"); // определяем параметры для запроса 
+		xhr.send(); // отправляем запрос на сервер
+		//alert(xhr.responseText);
+		xhr.onload = function() {
+			if (xhr.status != 200) { // анализируем HTTP-статус ответа, если статус не 200, то произошла ошибка
+				alert(`Ошибка ${xhr.status}: ${xhr.statusText}`); // Например, 404: Not Found
+			} 
+			else { 
+				//var getParam = JSON.parse(xhr.responseText);
+				console.log(xhr.responseText);
+				document.getElementById('tasksBlock').innerHTML = "";
+				var getTasks = JSON.parse(xhr.responseText);
+				
+				for (var i = 0; i <= sfsdsd; i++){
+				var task = document.createElement('div');
+				task.className = "task";
+				task.id = (i + 1);
+				document.getElementById("tasksBlock").append(task);
+				
+				var buttonDel = document.createElement('div');
+				buttonDel.innerHTML = '<button class="delTaskButton" onclick = "deleteParam(' + (i+1) + ')">Удалить это задание</button>';
+				task.append(buttonDel);
+				
+				
+				}
+								
+			}
+		};
+		
+				
+			
+		
+	}
+	*/
+	
+	/*
+	Не будучи пользователем Json, вы имели в виду это
+{
+"Device": [ "Curtain", { "Value": "1" } ],
+"Device": [ "Fan", { "Value": "1" } ]
+}
+Который, я думаю, вы можете затем получить доступ (индексы начинаются с 0)
+const char* Device_1 = doc["Device"][1]; // Fan
+const char* Device_1_Value = doc["Device"][1]["Value"]; // "1"
+	*/
+</script>
+</html>
