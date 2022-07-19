@@ -1,1 +1,1 @@
-Репозиторий проекта SuperComputer
+<<Репозиторий проекта SuperComputer>>
