@@ -25,12 +25,16 @@
 
 //Настройки-----------------------------------------------------------------------------------
 // Вставьте ниже SSID и пароль для своей WiFi-сети:
-const char* ssid = "Solo";
-const char* password = "i101i101i";
+const char* ssid = "Pyhlemo";
+const char* password = "13572468";
 
 // FTP - сервер:
 const char* FTP_LOGIN = "Supercomputer";
 const char* FTP_PASSWORD = "135246";
+
+//Авторизация на странице:
+#define HTTP_USERNAME "admin"
+#define HTTTP_PASSWORD "135246"
 
 #define BOT_TOKEN "5460143863:AAHcRFI42OueXaVsVzL_k28wci7SKph2qT0"    // Токен Telegram-бота
 

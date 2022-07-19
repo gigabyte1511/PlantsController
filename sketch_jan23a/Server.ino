@@ -2,10 +2,12 @@
 //https://github.com/me-no-dev/ESPAsyncWebServer/issues/195
 
 void AsyncWebServer(){
- 
 
   // URL для корневой страницы веб-сервера:---------------------------------------------------------------
   server.on("/", HTTP_GET, [](AsyncWebServerRequest *request){
+    if(!request->authenticate(HTTP_USERNAME, HTTTP_PASSWORD)){
+      return request->requestAuthentication();
+    }
     request->send(SPIFFS, "/index.html", String(), false, processor);
     //Запись события: Подключение клиента ---------------------------
     SPIFFS_JsonWriteStatisticEvents("ADD",dateString,getTimefromTimerString(),"Сервер","Подключение клиента");
