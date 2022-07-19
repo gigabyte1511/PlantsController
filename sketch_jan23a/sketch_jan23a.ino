@@ -27,7 +27,7 @@
 // Вставьте ниже SSID и пароль для своей WiFi-сети:
 const char* ssid = "Pyhlemo";
 const char* password = "13572468";
-
+//1232313213213213213
 // FTP - сервер:
 const char* FTP_LOGIN = "Supercomputer";
 const char* FTP_PASSWORD = "135246";
