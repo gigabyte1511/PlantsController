@@ -1,0 +1,312 @@
+html {
+  font-family: Helvetica;
+  /*display: inline-block;*/
+  margin: 0px auto;
+}
+
+.header{
+	background: linear-gradient(to right, #9af797, #008CBA);
+    border: 3px solid #000000; /* Белая рамка */
+    border-radius: 10px; /* Радиус скругления */
+	width: auto;
+}
+body{
+	margin: 3px;
+	background: #d5e3d3 ;
+}
+.footer{
+	position:fixed;
+    bottom: 0;
+    left: 3px;
+	right: 3px;
+	padding: 10px;
+	height: 20px;
+	background: linear-gradient(to right, #7fd17d, #004d66); /* Цвет фона */
+    border: 3px solid #000000; /* Белая рамка */
+    border-radius: 10px; /* Радиус скругления */
+
+}
+.tabs {
+    font-size: 0;
+  }
+
+  .tabs>input[type="radio"] {
+    display: none;
+  }
+
+  .tabs>div {
+    /* скрыть контент по умолчанию */
+    display: none;
+    border: 1px solid black;
+	border-radius: 0px 10px 10px 10px ;
+    padding: 10px 15px;
+    font-size: 16px;
+	background-color: #fff;
+  }
+
+  /* отобразить контент, связанный с вабранной радиокнопкой (input type="radio") */
+  #tab-btn-1:checked~#content-1,
+  #tab-btn-2:checked~#content-2,
+  #tab-btn-3:checked~#content-3,
+  #tab-btn-4:checked~#content-4  {
+    display: block;
+  }
+
+  .tabs>label {
+    display: inline-block;
+    text-align: center;
+    vertical-align: middle;
+    user-select: none;
+    background-color: #f5f5f5;
+    border: 1px solid black;
+	border-radius: 10px 10px 0px 0px ;
+    padding: 2px 8px;
+    font-size: 16px;
+    line-height: 1.5;
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out;
+    cursor: pointer;
+    position: relative;
+    top: 1px;
+  }
+
+  .tabs>label:not(:first-of-type) {
+    border-left: none;
+  }
+
+  .tabs>input[type="radio"]:checked+label {
+    background-color: #fff;
+    border-bottom: 1px solid #ffff;
+	border-radius: 10px 10px 0px 0px ;
+  }
+
+.body_status{
+	border: 3px solid #3b3b3b;
+	border-radius: 10px;
+	background-color: #fff;
+}
+
+.body_leftSide{
+	padding: 5px;
+	width: 40.5%;
+	height: 300px;
+    background: #ccc;
+    float: left;
+	border: 3px solid #3b3b3b;
+	border-radius: 10px 0px 0px 10px;
+	
+	text-indent:1%;
+	
+}
+.body_rightSide{
+	padding: 5px;
+	width: auto;
+	height: 300px;
+    background: #ccc; 	
+    margin-left: 42%;
+	border: 3px solid #3b3b3b;
+	border-radius: 0px 10px 10px 0px;
+	
+	text-indent:1%;
+	
+}
+
+
+h1{
+  color: #0F3376;
+  padding: 2vh;
+}
+p{
+  font-size: 1.5rem;
+}
+.button {
+  /*display: inline-block;*/
+  background-color: #008CBA;
+  border: none;
+  border-radius: 4px;
+  color: white;
+  padding: 16px 40px;
+  text-decoration: none;
+  font-size: 30px;
+  margin: 2px;
+  cursor: pointer;
+}
+.button2 {
+  background-color: #f44336;
+}
+
+.task {
+	display: flex;
+	align-items: center;
+	background-color: #cfcfcf;
+	border: none;
+	border-radius: 10px;
+	margin-top: 5px;
+	margin-bottom: 5px;
+	padding: 7px;
+	
+}
+.time{
+
+}
+select, .select {
+  width: 130px;
+  height: 50px;
+  font-size: 18px;
+  border-radius: 10px;
+  
+  background-color: #a3b9ff;
+  text-align: center;
+  
+}
+
+.SendParamButton{
+	width: 100%;
+	margin-top: 5px;
+	background-color: #008CBA;
+	border: none;
+	border-radius: 10px;
+	color: white;
+	padding: 16px;
+	text-decoration: none;
+	font-size: 30px;
+	cursor: pointer;
+}
+	.SendParamButton:hover{
+		background-color: #00b4ba;
+		transition: background-color 0.4s;
+	}
+	.SendParamButton:active {
+		transform: scale(98%,98%);
+	}
+
+.addTaskButton{
+	width: 100%;
+	margin-top: 5px;
+	background-color: #008CBA;
+	border: none;
+	border-radius: 10px;
+	color: white;
+	padding: 16px;
+	text-decoration: none;
+	font-size: 30px;
+	cursor: pointer;
+}	
+	.addTaskButton:hover{
+		background-color: #00b4ba;
+		transition: background-color 0.4s;
+	}
+	.addTaskButton:active {
+		transform: scale(98%,98%);
+	}
+
+.delTaskButton{
+	height: 50px;
+	background-color: #eb4444;
+	border: none;
+	border-radius: 10px;
+	color: white;
+	
+	text-decoration: none;
+	font-size: 20px;
+	cursor: pointer;
+}
+	.delTaskButton:hover{
+		background-color: #ed6f6f;
+		transition: background-color 0.4s;
+	}
+	.delTaskButton:active {
+		transform: scale(98%,98%);
+	}
+
+.delTimeButton{
+	width: 80px;
+	background-color: #eb4444;
+	border: none;
+	border-radius: 5px;
+	color: white;
+	padding: 6px;
+	text-decoration: none;
+	cursor: pointer;
+	text-align: center;
+	font-size: 15px;
+}
+	.delTimeButton:hover{
+		background-color: #ed6f6f;
+		transition: background-color 0.4s;
+	}
+	.delTimeButton:active {
+		transform: scale(98%,98%);
+	}
+	
+.addTimeIntervalButton{
+	height: 50px;
+	width: 120px;
+	background-color: #ff850a;
+	border: none;
+	border-radius: 10px;
+	color: white;
+	text-decoration: none;
+	cursor: pointer;
+	text-align: center;
+	font-size: 17px;
+}
+.addTimeIntervalButton:hover{
+		background-color: #ffa64d;
+		transition: background-color 0.4s;
+	}
+.addTimeIntervalButton:active {
+		transform: scale(98%,98%);
+	}
+	
+#timeInterval{
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+.nameOfObject{
+	padding: 18px;
+	font-size: 25px;
+	width: 55%;
+	border: none;
+	border-radius: 10px;
+	color: white;
+	background-color: #d4f6ff;
+	
+	margin-top: 5px;
+	border: none;
+	color: black;
+	text-decoration: none;
+}
+.task1{
+	display: flex;
+	align-items: center;
+	
+	border: none;
+	border-radius: 10px;
+	margin-top: 0px;
+	margin-bottom: 0px;
+	padding: 0px;
+}
+.nameOfSensor{
+	padding: 18px;
+	font-size: 25px;
+	width: 40%;
+	border: none;
+	border-radius: 10px;
+	color: white;
+	background-color: #9af797;
+	
+	margin-top: 5px;
+	border: none;
+	color: black;
+	text-decoration: none;
+}
+.SensorInput{
+	padding: 18px;
+	font-size: 25px;
+	width: 15%;
+	margin-top: 5px;
+	border-radius: 10px;
+	background-color: #ffffff;
+	color: Black;
+	font-size: 25px;
+}
