@@ -16,23 +16,27 @@ int getSoilHumidity(){
 
 //--функция определения показания датчика температуры-------------
 int getDHT11_Temperature(){
- #define DHTTYPE DHT11
-  uint8_t DHTPin = 4;
-  DHT dht(DHTPin, DHTTYPE);
   dht.begin();
-  //int value = dht.readTemperature();
-  int value = 23;
+  delay(500);
+  int value = dht.readTemperature();
+  while (value == 2147483647){
+    value = dht.readTemperature();
+    delay(500);
+  }
+  //int value = 23;
   return value;
 }
 
 //--функция определения показания датчика влажности воздуха-------------
 int getDHT11_Humidity(){
- #define DHTTYPE DHT11
-  uint8_t DHTPin = 4;
-  DHT dht(DHTPin, DHTTYPE);
   dht.begin();
-  //int value = dht.readHumidity();
-  int value = 70;
+  delay(500);
+  int value = dht.readHumidity();
+  while (value == 2147483647){
+    value = dht.readHumidity();
+    delay(500);
+  }
+  //int value = 70;
   return value;
 }
 

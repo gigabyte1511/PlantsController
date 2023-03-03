@@ -10,7 +10,7 @@ void AsyncWebServer(){
     }
     request->send(SPIFFS, "/index.html", String(), false, processor);
     //Запись события: Подключение клиента ---------------------------
-    SPIFFS_JsonWriteStatisticEvents("ADD",dateString,getTimefromTimerString(),"Сервер","Подключение клиента");
+    //SPIFFS_JsonWriteStatisticEvents("ADD",dateString,getTimefromTimerString(),"Сервер","Подключение клиента");
   });
   
   // URL для файла «style.css»:---------------------------------------------------------------
@@ -19,14 +19,16 @@ void AsyncWebServer(){
   });
 
   // URL для API веб-сервера, отправка клиенту JSON Params SPIFFS:-----------------------------------------------
-  server.on("/api/read", HTTP_POST, [](AsyncWebServerRequest *request){
-   //Опрос всех датчиков  и запись их показаний в Params.json
-   getDHT11SPIFFS();
-   getSoilHumiditySPIFFS();
-   getLightMeterSPIFFS();
-   request->send(SPIFFS, "/Params.json", String(), false, processor);
- 
-  });
+//  server.on("/api/read", HTTP_POST, [](AsyncWebServerRequest *request){
+//   //Опрос всех датчиков  и запись их показаний в Params.json
+//   //getDHT11SPIFFS();
+//   //getSoilHumiditySPIFFS();
+//   //getLightMeterSPIFFS();
+//   //request->send(SPIFFS, "/Params.json", String(), false, processor);
+//   //String SensorsJson = "{ \"Light\" : "+String(getLightMeter())+", \"SoilHumidity\": "+String(getSoilHumidity())+", \"TemperatureDHT11\" : "+String(getDHT11_Temperature())+", \"HumidityDHT11\" : "+String(getDHT11_Humidity())+" }";
+//   request->send(200, "application/json", SensorsJson);
+// 
+//  });
 
  
   // URL для API веб-сервера, получение и парсинг JSON Params и Tasks от клиента:
@@ -75,7 +77,7 @@ void AsyncWebServer(){
     
     request->send(200, "application/json", "{ \"status\": 0 }"); 
     //Запись события: Подключены Tasks от клиента ---------------------------
-    SPIFFS_JsonWriteStatisticEvents("ADD",dateString,getTimefromTimerString(),"Сервер","Получены Tasks от клиента");
+    //SPIFFS_JsonWriteStatisticEvents("ADD",dateString,getTimefromTimerString(),"Сервер","Получены Tasks от клиента");
    });
      
   // URL для API веб-сервера, чтение JSON Tasks из SPIFFS и отправка клиенту:---------------------------------------------------
@@ -86,7 +88,7 @@ void AsyncWebServer(){
   //Serial.println(timer_val);
   
   //Запись события: Подключены Tasks от клиента ---------------------------
-    SPIFFS_JsonWriteStatisticEvents("ADD",dateString,getTimefromTimerString(),"Сервер","Запрос клинта на чтение Tasks");
+    //SPIFFS_JsonWriteStatisticEvents("ADD",dateString,getTimefromTimerString(),"Сервер","Запрос клинта на чтение Tasks");
  
   });
   

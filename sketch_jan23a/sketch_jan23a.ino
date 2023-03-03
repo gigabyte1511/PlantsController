@@ -27,7 +27,7 @@
 // Вставьте ниже SSID и пароль для своей WiFi-сети:
 const char* ssid = "Pyhlemo";
 const char* password = "13572468";
-//1232313213213213213
+
 // FTP - сервер:
 const char* FTP_LOGIN = "Supercomputer";
 const char* FTP_PASSWORD = "135246";
@@ -52,6 +52,10 @@ AsyncWebServer server(80);
 FTPServer ftpSrv(SPIFFS);
 
 FastBot bot(BOT_TOKEN);
+
+#define DHTTYPE DHT11
+uint8_t DHTPin = 4;
+DHT dht(DHTPin, DHTTYPE);
 
 // Таймер:
 char dateString[10];
@@ -138,7 +142,7 @@ void setup(){
   server.begin();
   
   //Запись события: Запуск системы SuperComputer ---------------------------
-  SPIFFS_JsonWriteStatisticEvents("ADD",dateString,getTimefromTimerString(),"Сервер","Запуск системы SuperComputer");
+  //SPIFFS_JsonWriteStatisticEvents("ADD",dateString,getTimefromTimerString(),"Сервер","Запуск системы SuperComputer");
 
   ftpSrv.begin(F(FTP_LOGIN), F(FTP_PASSWORD));
 

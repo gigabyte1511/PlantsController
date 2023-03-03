@@ -88,7 +88,7 @@ void handleReceivedMessage(String message) {
   timer_set_counter_value( TIMER_GROUP_0, TIMER_0 , load_val);
 
   //Запись события: Время таймера установлено ---------------------------
-  SPIFFS_JsonWriteStatisticEvents("ADD",dateString,getTimefromTimerString(),"Сервер","Время таймера установлено");
+  //SPIFFS_JsonWriteStatisticEvents("ADD",dateString,getTimefromTimerString(),"Сервер","Время таймера установлено");
   
   Serial.println("------------------------------");
 }

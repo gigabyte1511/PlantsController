@@ -137,7 +137,7 @@
 	
 </body>
 <script>
-	window.onload = readPost();
+	//window.onload = readPost();
 	
 	function sendParam() {
 		var xhr = new XMLHttpRequest(); // инициализируем переменную новым объектом XMLHttpRequest
@@ -190,11 +190,11 @@
 		};
 	}
 	
-	function changeSlider(nameSlider, input_name ){
-		var x = document.getElementById(nameSlider).value;
-		document.getElementById(input_name).value = x + "0";
-		//document.querySelector('#input_VentilationSlider1').textContent = x;
-	}
+	// function changeSlider(nameSlider, input_name ){
+	// 	var x = document.getElementById(nameSlider).value;
+	// 	document.getElementById(input_name).value = x + "0";
+	// 	//document.querySelector('#input_VentilationSlider1').textContent = x;
+	// }
 	
 	var taskCouter = 0;
 	var timeIntervalCouter = 1;
